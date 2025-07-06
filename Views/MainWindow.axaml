@@ -1,0 +1,133 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MetronomeApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+        x:Class="MetronomeApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Metronome"
+        Width="400" Height="500"
+        MinWidth="350" MinHeight="450"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <!-- App Title -->
+        <TextBlock Grid.Row="0" 
+                   Text="Simple Metronome" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"
+                   Foreground="#333333"/>
+
+        <!-- BPM Display -->
+        <StackPanel Grid.Row="1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            
+            <!-- Large BPM Number -->
+            <TextBlock Text="{Binding CurrentBPM}" 
+                       FontSize="72" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"
+                       Foreground="#2E7D32"/>
+            
+            <!-- BPM Label -->
+            <TextBlock Text="BPM" 
+                       FontSize="16" 
+                       FontWeight="SemiBold" 
+                       HorizontalAlignment="Center"
+                       Foreground="#666666"
+                       Margin="0,-10,0,0"/>
+        </StackPanel>
+
+        <!-- BPM Controls -->
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,20,0,0">
+            
+            <Button Content="−" 
+                    FontSize="24" 
+                    FontWeight="Bold"
+                    Width="50" 
+                    Height="50"
+                    Command="{Binding DecreaseBPMCommand}"
+                    Margin="0,0,10,0"/>
+            
+            <Button Content="+" 
+                    FontSize="24" 
+                    FontWeight="Bold"
+                    Width="50" 
+                    Height="50"
+                    Command="{Binding IncreaseBPMCommand}"
+                    Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <!-- Time Signature -->
+        <StackPanel Grid.Row="3" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,20,0,0">
+            
+            <TextBlock Text="Time Signature:" 
+                       FontSize="14" 
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+            
+            <ComboBox SelectedItem="{Binding TimeSignature}" 
+                      ItemsSource="{Binding TimeSignatures}"
+                      Width="80"
+                      HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Visual Beat Indicator -->
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,20,0,0">
+            
+            <Ellipse Width="20" Height="20" 
+                     Fill="{Binding Beat1Color}" 
+                     Margin="5"/>
+            <Ellipse Width="20" Height="20" 
+                     Fill="{Binding Beat2Color}" 
+                     Margin="5"/>
+            <Ellipse Width="20" Height="20" 
+                     Fill="{Binding Beat3Color}" 
+                     Margin="5"/>
+            <Ellipse Width="20" Height="20" 
+                     Fill="{Binding Beat4Color}" 
+                     Margin="5"/>
+        </StackPanel>
+
+        <!-- Play/Stop Button -->
+        <Button Grid.Row="5" 
+                Content="{Binding PlayButtonText}" 
+                FontSize="18" 
+                FontWeight="Bold"
+                Height="60" 
+                Width="200"
+                HorizontalAlignment="Center"
+                Command="{Binding PlayStopCommand}"
+                Margin="0,20,0,0"
+                Background="#2E7D32"
+                Foreground="White"/>
+    </Grid>
+</Window>
