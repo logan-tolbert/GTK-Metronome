@@ -62,9 +62,9 @@ namespace MetronomeApp.Services
             set => _beatsPerMeasure = value;
         }
 
-        public async Task Start()
+        public Task Start()
         {
-            if (_isPlaying) return;
+            if (_isPlaying) return Task.CompletedTask;
 
             _isPlaying = true;
             _currentBeat = 1;
@@ -75,6 +75,7 @@ namespace MetronomeApp.Services
             _timer = new Timer(OnTimerTick, null, 0, interval);
 
             PlayingStateChanged?.Invoke(this, true);
+            return Task.CompletedTask;
         }
 
         public void Stop()
@@ -112,7 +113,7 @@ namespace MetronomeApp.Services
             }
         }
 
-        private async Task PlayClick(bool isAccent)
+        private Task PlayClick(bool isAccent)
         {
             // For now, we'll use a simple approach - you can add actual audio files later
             // This is a placeholder that will work without audio files
@@ -122,12 +123,14 @@ namespace MetronomeApp.Services
                 // await _player.Play("Assets/click-accent.wav") for accent
                 // await _player.Play("Assets/click-normal.wav") for normal
 
-                // For now, let's use system beep as a placeholder
-                Console.Beep(isAccent ? 800 : 600, 100);
+                // Cross-platform audio placeholder - NetCoreAudio will handle this
+                // TODO: Implement actual audio file playback
+                return Task.CompletedTask;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Audio playback error: {ex.Message}");
+                return Task.CompletedTask;
             }
         }
 
